@@ -1,5 +1,6 @@
 const resolve = require('path').resolve;
 const webpack = require('webpack');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -7,6 +8,8 @@ const theme = {
   "primary-color": "#1db65e"
 };
 const BASE_DIRNAME = process.cwd();
+const extractCSS = new ExtractTextPlugin('css/app-[contenthash:8].css');
+const extractLESS = new ExtractTextPlugin('css/vender-[contenthash:8].css');
 module.exports = {
   entry: [
     './index.js'
@@ -42,7 +45,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
+        use: extractCSS.extract({
             fallback: 'style-loader',
             use: ['css-loader?modules&sourceMap', 'postcss-loader']
         })
@@ -57,11 +60,11 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: [
-          'style-loader',
+        use: extractLESS.extract([
           'css-loader',
+          'postcss-loader',
           `less-loader?{"sourceMap":true,"modifyVars":${JSON.stringify(theme)}}`
-        ]
+        ])
       }
     ],
   },
@@ -100,6 +103,8 @@ module.exports = {
       },
       sourceMap: true,
     }),
-    new ExtractTextPlugin({ filename: 'css/app-[contenthash:8].css', disable: false, allChunks: true })
+    extractCSS,
+    extractLESS,
+    new ManifestPlugin()
   ],
 };
