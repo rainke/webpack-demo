@@ -9,13 +9,14 @@ const theme = {
 };
 const BASE_DIRNAME = process.cwd();
 const extractCSS = new ExtractTextPlugin('css/app-[contenthash:8].css');
-const extractLESS = new ExtractTextPlugin('css/vender-[contenthash:8].css');
+const extractLESS = new ExtractTextPlugin('css/vendor-[contenthash:8].css');
 module.exports = {
-  entry: [
-    './index.js'
-  ],
+  entry: {
+    app: './index.js',
+    vendors: ['react', 'react-dom', 'redux', 'react-redux', 'react-router-dom', 'react-router-redux','react-router', 'antd']
+  },
   output: {
-    filename: 'js/bundle-[chunkhash:8].js',
+    filename: 'js/app-[chunkhash:8].js',
 
     path: resolve(BASE_DIRNAME, 'build'),
 
@@ -88,6 +89,10 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       __DEV__: false
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      //manifest :防止vendor重新打包
+      names: ['vendors', 'manifest']
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
