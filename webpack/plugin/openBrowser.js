@@ -8,11 +8,15 @@ function OpenBrowserPlugin(options) {
   this.options = {
     port: options.port || defaultOptions.port
   }
+  this.firstRun = true;
 }
 
 OpenBrowserPlugin.prototype.apply = function (compiler) {
   compiler.plugin('done', () => {
-    openBrowser('http://localhost:' + this.options.port);
+    if(this.firstRun) {
+      this.firstRun = false;
+      openBrowser('http://localhost:' + this.options.port);
+    }
   })
 };
 
