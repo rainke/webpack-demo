@@ -6,11 +6,11 @@ import {toggleTodo} from '../actions';
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
-    case 'SHOW_ALL':
+    case 'all':
       return todos;
-    case 'SHOW_COMPLETED':
+    case 'complete':
       return todos.filter(t => t.complete);
-    case 'SHOW_ACTIVE':
+    case 'active':
       return todos.filter(t => !t.complete);
     default:
       throw new Error(`Unknown filter: ${filter}.`);
@@ -19,13 +19,12 @@ const getVisibleTodos = (todos, filter) => {
 
 @withRouter
 @connect(
-  state => ({ todos: getVisibleTodos(state.todos, state.visibilityFilter)}), 
+  (state, { match }) => ({ todos: getVisibleTodos(state.todos, match.params.filter || 'all') }), 
   dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
 )
 class VisibleFilterList extends Component {
   render() {
-    let { todos, onTodoClick, match } = this.props;
-    let {filter} = match.params;
+    let { todos, onTodoClick } = this.props;
     return (
       <ul>
         {todos.map( todo => (

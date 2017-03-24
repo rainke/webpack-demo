@@ -1,26 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setVisibleTodo } from '../actions';
-@connect(
-)
+import { Link } from 'react-router-dom';
+@connect()
 class Footer extends Component {
 
   render() {
     const { dispatch } = this.props; 
     return (
       <div>
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          dispatch(setVisibleTodo('SHOW_ALL'));
-        }}>all</a>,
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          dispatch(setVisibleTodo('SHOW_COMPLETED'));
-        }}>completed</a>,
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          dispatch(setVisibleTodo('SHOW_ACTIVE'));
-        }}>active</a>
+        <Link to="/">all</Link>,
+        <Link to="/complete">completed</Link>,
+        <Link to="/active">active</Link>
       </div>
     );
   }

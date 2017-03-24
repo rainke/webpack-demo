@@ -12,8 +12,3 @@ export const toggleTodo = (id) => ({
   type: 'TOGGLE_TODO',
   payload: id
 });
-
-export const setVisibleTodo = (filter) => ({
-  type: 'SET_VISIBLE_TODO',
-  payload: filter
-});

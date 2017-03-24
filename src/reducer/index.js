@@ -17,14 +17,6 @@ const todos = (state = [], action) => {
     default:
       return state;
   }
-}
-
-const visibilityFilter = (state = 'SHOW_ALL', action) => {
-  switch (action.type) {
-    case 'SET_VISIBLE_TODO':
-      return action.payload;
-    default:
-      return state;
-  }
 };
-export default combineReducers({ todos, visibilityFilter })
+
+export default combineReducers({ todos });
