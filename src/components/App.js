@@ -1,15 +1,12 @@
 import React, {Component} from 'react'
 import AddTodo from './AddTodo';
 import VisibleFilterList from './VisibleFilterList';
+import Footer from './Footer';
 const App = () => (
   <div>
     <AddTodo />
     <VisibleFilterList />
-    <div>
-      <a href="#">all</a>, 
-      <a href="#">completed</a>, 
-      <a href="#">active</a>
-    </div>
+    <Footer />
   </div>
 );
 export default App;
