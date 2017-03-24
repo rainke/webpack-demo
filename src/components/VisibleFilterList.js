@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import Todo from './Todo';
 import {toggleTodo} from '../actions';
 
@@ -16,14 +17,15 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
+@withRouter
 @connect(
   state => ({ todos: getVisibleTodos(state.todos, state.visibilityFilter)}), 
   dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
 )
 class VisibleFilterList extends Component {
-
   render() {
-    let { todos, onTodoClick } = this.props;
+    let { todos, onTodoClick, match } = this.props;
+    let {filter} = match.params;
     return (
       <ul>
         {todos.map( todo => (

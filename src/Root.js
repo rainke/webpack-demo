@@ -9,9 +9,9 @@ const Root = ({store}) => (
  <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Link to="/hello"> hello </Link>
-        <Route exact path="/" component={App} />
-        <Route path="/hello" render={() => (<div>hello</div> )} />
+        {/*<Link to="/hello"> hello </Link>*/}
+        <Route path="/:filter?" component={App} />
+        {/*<Route path="/hello" render={() => (<div>hello</div> )} />*/}
       </div>
     </BrowserRouter>
  </Provider>
