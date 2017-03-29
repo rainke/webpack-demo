@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router';
+@withRouter
 @connect()
 class Footer extends Component {
 
   render() {
-    const { dispatch } = this.props; 
+    const { dispatch } = this.props;
     return (
       <div>
-        <Link to="/">all</Link>,
-        <Link to="/complete">completed</Link>,
-        <Link to="/active">active</Link>
+        <NavLink activeStyle={{ color: 'red' }} exact to="/">all</NavLink>,
+        <NavLink activeStyle={{ color: 'red' }} to="/complete">completed</NavLink>,
+        <NavLink activeStyle={{ color: 'red' }} to="/active">active</NavLink>
       </div>
     );
   }

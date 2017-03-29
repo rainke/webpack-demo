@@ -20,7 +20,8 @@ const getVisibleTodos = (todos, filter) => {
 @withRouter
 @connect(
   (state, { match }) => ({ todos: getVisibleTodos(state.todos, match.params.filter || 'all') }), 
-  dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
+  // dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
+  { onTodoClick: toggleTodo }
 )
 class VisibleFilterList extends Component {
   render() {
