@@ -1,25 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { getVisibleTodos } from '../reducer';
 import Todo from './Todo';
 import {toggleTodo} from '../actions';
 
-const getVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case 'all':
-      return todos;
-    case 'complete':
-      return todos.filter(t => t.complete);
-    case 'active':
-      return todos.filter(t => !t.complete);
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
-  }
-};
-
 @withRouter
 @connect(
-  (state, { match }) => ({ todos: getVisibleTodos(state.todos, match.params.filter || 'all') }), 
+  (state, { match }) => ({ todos: getVisibleTodos(state, match.params.filter || 'all') }), 
   // dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
   { onTodoClick: toggleTodo }
 )

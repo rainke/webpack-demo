@@ -1,22 +1,7 @@
 import { combineReducers } from 'redux';
-const todos = (state = [], action) => {
-  switch(action.type) {
-    case 'ADD_TODO': {
-      return [...state, action.payload];
-    }
-    case 'TOGGLE_TODO': {
-      return state.map( item => {
-        if(item.id === action.payload) {
-          item.complete = !item.complete;
-          return item;
-        } else  {
-          return item;
-        }
-      });
-    }
-    default:
-      return state;
-  }
-};
+import todos, * as fromTodos from './todos';
 
 export default combineReducers({ todos });
+
+export const getVisibleTodos = (state, filter) =>
+  fromTodos.getVisibleTodos(state.todos, filter);
