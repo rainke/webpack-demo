@@ -3,15 +3,37 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { getVisibleTodos } from '../reducer';
 import Todo from './Todo';
-import {toggleTodo} from '../actions';
+import { toggleTodo, fetchTodos } from '../actions';
 
 @withRouter
 @connect(
-  (state, { match }) => ({ todos: getVisibleTodos(state, match.params.filter || 'all') }), 
+  (state, { match }) => {
+    const filter = match.params.filter || 'all';
+    return { 
+      todos: getVisibleTodos(state, filter),
+      filter
+    }
+  }, 
   // dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
-  { onTodoClick: toggleTodo }
+  { onTodoClick: toggleTodo, fetchTodos }
 )
 class VisibleFilterList extends Component {
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    const {filter} = this.props
+    if(filter !== prevProps.filter)
+      this.fetchData();
+  }
+
+  fetchData(){
+    const { filter, fetchTodos} = this.props;
+    fetchTodos(filter);
+  }
+
   render() {
     let { todos, onTodoClick } = this.props;
     return (
