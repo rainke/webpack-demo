@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { getVisibleTodos } from '../reducer';
+import { getVisibleTodos, getIsFetching } from '../reducer';
 import Todo from './Todo';
 import { toggleTodo, fetchTodos } from '../actions';
 
@@ -11,7 +11,8 @@ import { toggleTodo, fetchTodos } from '../actions';
     const filter = match.params.filter || 'all';
     return { 
       todos: getVisibleTodos(state, filter),
-      filter
+      filter,
+      isFetching: getIsFetching(state, filter)
     }
   }, 
   // dispatch => ({onTodoClick: (id) => dispatch(toggleTodo(id))})
@@ -35,7 +36,10 @@ class VisibleFilterList extends Component {
   }
 
   render() {
-    let { todos, onTodoClick } = this.props;
+    let { todos, onTodoClick, isFetching } = this.props;
+    if(isFetching && !todos.length) {
+      return <div>loading</div>
+    }
     return (
       <ul>
         {todos.map( todo => (

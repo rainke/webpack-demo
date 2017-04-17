@@ -10,3 +10,6 @@ export const getVisibleTodos = (state, filter) => {
   const ids = fromByFilter.getIds(state.idByFilter[filter]);
   return ids.map(id => fromById.getTodo(state.byId, id));
 };
+export const getIsFetching = (state, filter) => {
+ return fromByFilter.getIsFetching(state.idByFilter[filter])
+};

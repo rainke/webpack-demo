@@ -6,6 +6,12 @@ import myApp from './reducer';
 const middleware = (store) => (next) => (action) => {
   return next(action);
 }
+
+const myThunk = store => next => action =>
+  typeof action === 'function' ?
+    action(store.dispatch) :
+    next(action);
+
 const storeConfigrue = () => {
   const persistState = undefined;
   const composeEnhancers = __DEV__ ?
